@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from rest_framework import generics, status
-from .serializers import VideoSerializer, CreateVideoSerializer
+from .serializers import VideoSerializer, CreateVideoSerializer, UGChordSerializer
 from .models import Video
+from .models import UGChords
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from .FetchUGChords import FetchUGChords
 import logging
+import csv
 
 # Create your views here.
 
@@ -39,13 +42,31 @@ class CreateVideoView(APIView):
             logger.error('video_id is ')
             logger.error(video_id)
             title = serializer.data.get('title')
+            artist = serializer.data.get('artist')
+            song = serializer.data.get('song')
 
             queryset = Video.objects.filter(video_id = video_id)
             if queryset.exists():
                 return Response({'Already exists'}, status=status.HTTP_200_OK)
             else:
-                video = Video(video_id = video_id, title = title)
+                ugChordsClass = FetchUGChords();
+                ugChords = ugChordsClass.getChords();
+                video = Video(video_id = video_id, title = title, artist = artist, song = song, chords = ugChords)
                 video.save()
                 return Response(VideoSerializer(video).data, status=status.HTTP_201_CREATED)
 
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
+
+class UGChordView(generics.ListCreateAPIView):
+    queryset = UGChords.objects.all()
+    serializer_class = UGChordSerializer
+
+def upload_chords(some):
+    with open("unique_chords.csv") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            _, created = UGChords.objects.get_or_create(
+                artist=row[1],
+                song=row[2],
+                ug_chords=row[3]
+            )
