@@ -3,6 +3,7 @@ import SearchBar from './Searchbar';
 import youtube from '../youtube';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
+import ResultVideo from './ResultVideo';
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -78,11 +79,14 @@ export default class HomePage extends Component {
             </Grid>
             <Grid item xs={6} align="center">
               <VideoDetail video={this.state.selectedVideo}/>
+
               <TextField required id="artist" label="Artist" onChange={this.handleArtistChange}/>
               <TextField required id="song" label="Song" onChange={this.handleSongChange}/>
               <Button variant="contained" color="primary" onClick={this.handleAnalyzeVideoButton}>
                 Analyze this video
               </Button>
+              <ResultVideo video={this.state.selectedVideo}/>
+
             </Grid>
             <Grid item xs={6} align="right">
               <VideoList handleVideoSelect={this.handleVideoSelect} videos={this.state.videos}/>

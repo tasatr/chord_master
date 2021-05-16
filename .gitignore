@@ -11,7 +11,15 @@ venv/
 # Database
 db.sqlite3
 
+temp.*
+output.mp4
+*.csv
+*.mp4
+*.mkv
+*.mp3
+
 # Static folder at project root
+/audio_output/
 /static/
 /frontend/static/
 
