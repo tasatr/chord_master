@@ -3,8 +3,6 @@ import React from "react";
 const VideoDetail = ({ video }) => {
   if (!video) {
     return <div>
-       <h1>Enter search keyword to load...</h1>
-       
     </div>;
   }
 
@@ -17,7 +15,6 @@ const VideoDetail = ({ video }) => {
       </div>
       <div className="ui segment">
         <h4 className="ui header">{video.snippet.title}</h4>
-        <p>{video.snippet.description}</p>
       </div>
     </div>
   );
