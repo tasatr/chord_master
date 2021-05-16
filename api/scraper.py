@@ -60,8 +60,6 @@ def get_tabs_data(url):
     data = simple_get(url)
     data = data.decode("utf-8")
 
-    print(data)
-
     tab_links = []
 
     m = re.findall('(https://tabs.ultimate-guitar.com/tab/\S+?)&', data)

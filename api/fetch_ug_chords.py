@@ -2,8 +2,9 @@ from .models import UGChords
 from .scraper import scrape_chords_for_song
 import logging
 import pandas as pd
+import numpy as np
 
-logger = logging.getLogger("FetchUGChords")
+logger = logging.getLogger("fetch_ug_chords")
 class fetch_ug_chords() :
     def __init__(self, artist, song):
         self.artist = artist
@@ -30,7 +31,7 @@ class fetch_ug_chords() :
 
         if not ugchords:
             #do This
-            scrape_chords_from_ug(self.artist, self.song)
+            self.scrape_chords_from_ug(self.artist, self.song)
             ugchords = UGChords.objects.filter(artist__icontains=self.artist, song__icontains=self.song)
 
         for chords in ugchords:
