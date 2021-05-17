@@ -44,8 +44,8 @@ class VideoDetail extends React.Component {
         <div className="ui segment">
           <h4 className="ui header">{video.snippet.title}</h4>
         </div>
-        <TextField required id="artist" label="Artist" onChange={this.handleArtistChange}/>
-        <TextField required id="song" label="Song" onChange={this.handleSongChange}/>
+        <TextField required id="artist" label="Artist" value={this.props.artist} onChange={this.handleArtistChange}/>
+        <TextField required id="song" label="Song" value={this.props.song} onChange={this.handleSongChange}/>
         <Button variant="contained" color="primary" onClick={this.handleAnalyzeVideoButton}>
           Analyze this video
         </Button>
