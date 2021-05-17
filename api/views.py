@@ -36,7 +36,7 @@ class CreateVideoView(APIView):
         serializer = self.serializer_class(data=request.data)
 
         #TODO: Remove this
-#        Video.objects.all().delete()
+        Video.objects.all().delete()
 
         result = cleanup('.')
 
@@ -79,8 +79,10 @@ class CreateVideoView(APIView):
             chromagram['predicted'] = predictions
             chromagram['predicted_cluster'] = smooth_chords_by_beat(chromagram, signal, sr, predicted_col='predicted', n_beats=1)
             chords_simplified = simplify_predicted_chords(chromagram)
-            chords_simplified = remove_too_short_chords(chords_simplified, 0.15)
-            chords_simplified = simplify_predicted_chords(chords_simplified)
+            # chords_simplified = remove_too_short_chords(chords_simplified, 0.1)
+            # chords_simplified = simplify_predicted_chords(chords_simplified)
+            # chords_simplified = remove_too_short_chords(chords_simplified, 0.2)
+            # chords_simplified = simplify_predicted_chords(chords_simplified)
 
             chords_simplified.to_csv('chords_simplified.csv')
 

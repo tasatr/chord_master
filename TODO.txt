@@ -1,6 +1,4 @@
-1. display the result on the page
-2. add scraper for songs not in db
-3. Fix the page
+1. Fix the page
 4. Data augmentation for missing chords
 5. Try FCN and CNN
 4. add default option for songs not in UGg
@@ -17,3 +15,6 @@ pip install librosa
 pip install matplotlib
 pip install djangorestframework
 pip install spleeter
+
+
+npm install --save-dev file-loader

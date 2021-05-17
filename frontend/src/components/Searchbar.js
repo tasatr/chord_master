@@ -19,7 +19,6 @@ class Searchbar extends React.Component {
 
         return (
             <>
-            <h2  style={{textAlign:"center"}}>code_master</h2>
             <div className='search-bar ui segment'>
                 <form onSubmit={this.handleSubmit} className='ui form'>
                     <div className='field'>
