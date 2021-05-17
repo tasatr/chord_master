@@ -35,7 +35,19 @@ export default class HomePage extends Component {
     };
     handleVideoSelect = (video) => {
       console.log("this is selected video ",video);
-        this.setState({selectedVideo: video})
+
+      var ret = video.snippet.title.replace(/\[.*\]/g,'');
+      console.log('VIDEO TITLE: ', ret)
+
+      let splitall = ret.split("-")
+      console.log('ARTIST: ', splitall[0].trim())
+      console.log('SONG: ', splitall[1].trim())
+
+        this.setState({
+          selectedVideo: video,
+          artist: splitall[0],
+          song: splitall[1]
+        })
     };
 
     handleAnalyzeVideoButton() {
@@ -105,6 +117,8 @@ export default class HomePage extends Component {
             <Grid item xs={6} align="center">
               <VideoDetail
                 selectedVideo={this.state.selectedVideo}
+                artist={this.state.artist}
+                song={this.state.song}
                 handleArtistChange={this.handleArtistChange}
                 handleSongChange={this.handleSongChange}
                 handleAnalyzeVideoButton={this.handleAnalyzeVideoButton}
