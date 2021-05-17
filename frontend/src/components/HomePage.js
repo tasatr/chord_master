@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { trackPromise } from 'react-promise-tracker';
 import SearchBar from './Searchbar';
+import Logo from './Logo';
 import youtube from '../youtube';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
 import ResultVideo from './ResultVideo';
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 
 
 export default class HomePage extends Component {
@@ -84,14 +83,14 @@ export default class HomePage extends Component {
     handleArtistChange(e) {
       console.log('##########Changing artist');
       this.setState({
-        artist: e.target.value,
+        artist: e,
       })
     }
 
     handleSongChange(e) {
       console.log('##########Changing song');
       this.setState({
-        song: e.target.value,
+        song: e,
       })
     }
 
@@ -100,16 +99,17 @@ export default class HomePage extends Component {
         return (
           <Grid container spacing={1}>
             <Grid item xs={12} align="center">
+                <Logo />
                 <SearchBar handleFormSubmit={this.handleSubmit}/>
             </Grid>
             <Grid item xs={6} align="center">
-              <VideoDetail video={this.state.selectedVideo}/>
+              <VideoDetail
+                selectedVideo={this.state.selectedVideo}
+                handleArtistChange={this.handleArtistChange}
+                handleSongChange={this.handleSongChange}
+                handleAnalyzeVideoButton={this.handleAnalyzeVideoButton}
+              />
 
-              <TextField required id="artist" label="Artist" onChange={this.handleArtistChange}/>
-              <TextField required id="song" label="Song" onChange={this.handleSongChange}/>
-              <Button variant="contained" color="primary" onClick={this.handleAnalyzeVideoButton}>
-                Analyze this video
-              </Button>
               <ResultVideo video={this.state.resultVideo}/>
 
             </Grid>

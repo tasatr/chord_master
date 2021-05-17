@@ -88,16 +88,20 @@ def simplify_predicted_chords(chromagram, predicted_col='predicted'):
     change_chord = chromagram[predicted_col] != chromagram[predicted_col].shift(-1)
     change_chord_ix = change_chord[change_chord == True].index
     filtered_pcp = chromagram.loc[change_chord_ix].copy()
-    end_time_previous = np.array([0] + filtered_pcp['end'][:-1].tolist())
-    filtered_pcp['start'] = end_time_previous
+    start_time_following = np.array(filtered_pcp['start'][1:].tolist())
+    start_time_following = np.append(start_time_following, filtered_pcp['end'].tail(1))
+
+    filtered_pcp['end'] = start_time_following
     return filtered_pcp[[predicted_col, 'start', 'end']].reset_index(drop=True)
 
 def remove_too_short_chords(chromagram, threshold, predicted_col='predicted'):
     long_chords = chromagram.end - chromagram.start > threshold
     long_chords_ix = long_chords[long_chords == True].index
     filtered_pcp = chromagram.loc[long_chords_ix].copy()
-    end_time_previous = np.array([0] + filtered_pcp['end'][:-1].tolist())
-    filtered_pcp['start'] = end_time_previous
+    start_time_following = np.array(filtered_pcp['start'][1:].tolist())
+    start_time_following = np.append(start_time_following, filtered_pcp['end'].tail(1))
+
+    filtered_pcp['end'] = start_time_following
     return filtered_pcp[[predicted_col, 'start', 'end']].reset_index(drop=True)
 
 def cleanup(directory):
