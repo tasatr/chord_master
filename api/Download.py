@@ -1,6 +1,7 @@
 import youtube_dl
 import os
 from spleeter.separator import Separator
+import glob
 
 class Download:
     @staticmethod
@@ -39,14 +40,13 @@ class Download:
             os.remove(file_path)
 
         ydl_opts = {
-            'outtmpl': 'temp'
+            'outtmpl': 'temp_video'
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             filename = ydl.download(['http://www.youtube.com/watch?v=' + video_id])
 
-            file_path = 'temp.mp4'
-            if os.path.exists(file_path):
-                return file_path
-            else:
-                file_path = 'temp.mkv'
-            return file_path
+            filenames = glob.glob('temp_video.*')
+            if os.path.exists(filenames[0]):
+                return filenames[0]
+
+            return 'missingvideo.mp4'

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { trackPromise } from 'react-promise-tracker';
 import SearchBar from './Searchbar';
 import youtube from '../youtube';
 import VideoList from './VideoList';
@@ -14,7 +15,8 @@ export default class HomePage extends Component {
     super(props);
     this.state = {
       videos: [],
-      selectedVideo: null
+      selectedVideo: null,
+      resultVideo: null,
     };
     this.handleAnalyzeVideoButton = this.handleAnalyzeVideoButton.bind(this);
     this.handleArtistChange = this.handleArtistChange.bind(this);
@@ -43,6 +45,10 @@ export default class HomePage extends Component {
         console.log('video_id is: ', this.state.selectedVideo.id.videoId);
         console.log('title is: ', this.state.selectedVideo.snippet.title);
 
+        this.setState({
+          video_url: '',
+        })
+
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -53,7 +59,25 @@ export default class HomePage extends Component {
             song: this.state.song
           }),
         };
-        fetch('/api/create-video', requestOptions).then((response) => response.json());
+        trackPromise(
+          fetch('/api/create-video', requestOptions).then(response => {
+            if (response.status > 400) {
+              console.log('######################RESPONSE: ', response)
+              return this.setState(() => {
+                return { placeholder: "Something went wrong!" };
+              });
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('##################DATA: ', data)
+            this.setState({
+              resultVideo: data.result_video,
+            })
+          })
+
+
+        );
       }
     };
 
@@ -71,6 +95,7 @@ export default class HomePage extends Component {
       })
     }
 
+
     render() {
         return (
           <Grid container spacing={1}>
@@ -85,7 +110,7 @@ export default class HomePage extends Component {
               <Button variant="contained" color="primary" onClick={this.handleAnalyzeVideoButton}>
                 Analyze this video
               </Button>
-              <ResultVideo video={this.state.selectedVideo}/>
+              <ResultVideo video={this.state.resultVideo}/>
 
             </Grid>
             <Grid item xs={6} align="right">
