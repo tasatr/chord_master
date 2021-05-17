@@ -34,17 +34,20 @@ class CreateVideoView(APIView):
             self.request.session.create()
 
         serializer = self.serializer_class(data=request.data)
-        logger.error('past serializer ')
-        logger.error(serializer)
 
         #TODO: Remove this
 #        Video.objects.all().delete()
 
         result = cleanup('.')
 
-        queryset = Video.objects.filter(video_id = serializer.initial_data.get('video_id'))
-        if queryset.exists():
-            return Response({'Already exists'}, status=status.HTTP_200_OK)
+        video = Video.objects.filter(video_id = serializer.initial_data.get('video_id')).first()
+        logger.error('##############################Past queryset')
+        logger.error(video)
+        if video:
+            logger.error("#################VIDEO EXISTS")
+            logger.error(video.result_video)
+
+            return Response(VideoSerializer(video).data, status=status.HTTP_200_OK)
 
         if serializer.is_valid():
             logger.error('serializer is valid')
@@ -55,49 +58,43 @@ class CreateVideoView(APIView):
             artist = serializer.data.get('artist')
             song = serializer.data.get('song')
 
-            queryset = Video.objects.filter(video_id = video_id)
-            if queryset.exists():
-                ugChordsClass = fetch_ug_chords(artist, song);
-                ugChords = ugChordsClass.getChords();
-                return Response({'Already exists'}, status=status.HTTP_200_OK)
-            else:
-                #Download the video and audio
-                audio = Download.download_mp3(video_id)
-                video = Download.download_video(video_id)
+            #Download the video and audio
+            audio = Download.download_mp3(video_id)
+            video = Download.download_video(video_id)
 
-                #Extract background
-                finished = Download.separate_vocal()
+            #Extract background
+            finished = Download.separate_vocal()
 
-                #Get chords for this song from Ultimate Guitar
-                ugChordsClass = fetch_ug_chords(artist, song);
-                ugChords = ugChordsClass.getChords();
+            #Get chords for this song from Ultimate Guitar
+            ugChordsClass = fetch_ug_chords(artist, song);
+            ugChords = ugChordsClass.getChords();
 
-                #Get the generated chord sequence for this song
-                signal, sr, chromagram = get_song_chromagram('audio_output/temp/accompaniment.wav')
+            #Get the generated chord sequence for this song
+            signal, sr, chromagram = get_song_chromagram('audio_output/temp/accompaniment.wav')
 
-                #Get predictions
-                knn = KNN(ugChords)
-                predictions = knn.get_classification(chromagram[COL_NAMES_NOTES])
+            #Get predictions
+            knn = KNN(ugChords)
+            predictions = knn.get_classification(chromagram[COL_NAMES_NOTES])
 
-                chromagram['predicted'] = predictions
-                chromagram['predicted_cluster'] = smooth_chords_by_beat(chromagram, signal, sr, predicted_col='predicted', n_beats=1)
-                chords_simplified = simplify_predicted_chords(chromagram)
-                chords_simplified = remove_too_short_chords(chords_simplified, 0.15)
-                chords_simplified = simplify_predicted_chords(chords_simplified)
+            chromagram['predicted'] = predictions
+            chromagram['predicted_cluster'] = smooth_chords_by_beat(chromagram, signal, sr, predicted_col='predicted', n_beats=1)
+            chords_simplified = simplify_predicted_chords(chromagram)
+            chords_simplified = remove_too_short_chords(chords_simplified, 0.15)
+            chords_simplified = simplify_predicted_chords(chords_simplified)
 
-                chords_simplified.to_csv('chords_simplified.csv')
+            chords_simplified.to_csv('chords_simplified.csv')
 
-                #Generate a .srt file from the predicted chords
-                subtitles = create_subtitles(chords_simplified)
+            #Generate a .srt file from the predicted chords
+            subtitles = create_subtitles(chords_simplified)
 
-                #Merge subtitles into the original container file
-                output_file_name = video_id + '_subtitled.mp4'
-                result = burn_subtitles_to_video(video, output_file_name)
+            #Merge subtitles into the original container file
+            output_file_name = video_id + '_subtitled.mp4'
+            result = burn_subtitles_to_video(video, output_file_name)
 
-                f = open(output_file_name, 'rb')
-                video = Video(video_id = video_id, title = title, artist = artist, song = song, chords = ugChords, result_video = File(f) )
-                video.save()
-                return Response(VideoSerializer(video).data, status=status.HTTP_201_CREATED)
+            f = open(output_file_name, 'rb')
+            video = Video(video_id = video_id, title = title, artist = artist, song = song, chords = ugChords, result_video = File(f) )
+            video.save()
+            return Response(VideoSerializer(video).data, status=status.HTTP_201_CREATED)
 
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
 

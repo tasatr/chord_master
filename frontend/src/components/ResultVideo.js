@@ -5,11 +5,12 @@ const ResultVideo = ({ video }) => {
     return <div>
            </div>;
   }
+  console.log('###################REsult video:', video);
 
   return (
     <div>
       <video width="320" height="240" controls>
-        <source src="/media/video/21/G2fOum_KWQU_subtitled_XH7yFbW.mp4" type="video/mp4">
+        <source src={video} type="video/mp4">
         </source>
         Your browser does not support this video format.
 
