@@ -36,7 +36,7 @@ class CreateVideoView(APIView):
         serializer = self.serializer_class(data=request.data)
 
         #TODO: Remove this
-        Video.objects.all().delete()
+        #Video.objects.all().delete()
 
         result = cleanup('.')
 
@@ -81,7 +81,7 @@ class CreateVideoView(APIView):
             chords_simplified = simplify_predicted_chords(chromagram)
             chords_simplified = remove_too_short_chords(chords_simplified, 0.15)
             chords_simplified = simplify_predicted_chords(chords_simplified)
-            
+
             chords_simplified.to_csv('chords_simplified.csv')
 
             #Generate a .srt file from the predicted chords
