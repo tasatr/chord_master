@@ -4,10 +4,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/tasatr/chord_master">
     <img src="https://github.com/tasatr/chord_master/images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
+  
   <h3 align="center">Chord Master</h3>
 
   <p align="center">
