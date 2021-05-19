@@ -4,7 +4,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="https://github.com/tasatr/chord_master/images/chordmaster.jpg" alt="Logo" width="80" height="80">
+    <img src="https://github.com/tasatr/chord_master/blob/master/images/chordmaster.jpg" alt="Logo" width="80" height="80">
 
   <h3 align="center">Chord Master</h3>
 
