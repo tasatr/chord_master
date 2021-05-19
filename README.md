@@ -5,7 +5,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/tasatr/chord_master">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/tasatr/chord_master/images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Chord Master</h3>
@@ -86,16 +86,6 @@ A friend of mine suggested trying out FCN for chord prediction, so this was my f
 Triinu Tasa - triinu.tasa@gmail.com
 
 Project Link: [https://github.com/tasatr/chord_master](https://github.com/tasatr/chord_master)
-
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
-
 
 
 
