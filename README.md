@@ -29,7 +29,7 @@
         <li><a href="#The First Approach">The First Approach</a></li>
         <li><a href="#second-approach">The Second Approach</a></li>
         <li><a href="#third-approach">The Third Approach</a></li>
-        <li><a href="fourth-approach">The Fourth Approach</a><li>
+        <li><a href="fourth-approach">The Fourth Approach</a></li>
       </ul>
     </li>
 
@@ -49,7 +49,7 @@ It does not initially seem like too difficult a task: we cut the recording into 
 <br/>
 One of the major hurdles in predicting chords is picking the right chord from a set of chords that match the chromagram equally well. It is well known that for any key there are certain chords that sound better than others, and there are certain sequences that sound better than others. Therefore it is common to use Hidden Markov Models in chord predictions, by specifying initial probabilities and the probabilities of transitions to other chords. There are lots of papers written about transition probabilities, they differ between cultures, genres and even between artists. Hence it is near impossible to get chords right. But it is still fun to try.
 
-### first-approach
+### The First Approach
 
 When first researching chord prediction I stumbled upon this superb tutorial:
 https://github.com/caiomiyashiro/music_and_science/blob/master/Chord%20Recognition/complete_pydata_hidden_markov_models_for_chord_recognition.ipynb
@@ -61,7 +61,7 @@ It didn't work out very well, for example the chords changed when ever the melod
 Also, there's one major issue with this. Almost every song has some noise in the beginning and hence the first chord is usually not correct. Which also means that the following chords are not correct. So for this approach I would first need to write some clever method to figure out exactly when the song really begins. I will leave this task for the future.
 
 
-### second-approach
+### The Second Approach
 
 As I didn't like the fact that the first approach had so many chords so frequently that it would be rather impossible to follow, I wondered how to narrow down the amount of chords for any song. I decided to go with the naughty approach of scraping ultimate-guitar for the list of all possible chords for the specific song, and then selecting only among these.
 
@@ -71,11 +71,11 @@ Third, I got the predictions from the KNN classifier
 
 This didn't work terribly well either, as the training data is terribly uneven. There are tens of thousands of examples of C chord, but not so many about Cadd2 for example. And then I decided to make things even simpler.
 
-### third-approach
+### The Third Approach
 
 I decided to take average values for each chord in my training data. That left the training data very small, training became instant, and for prediction I used only 1 neighbour. So far this approach seemed to work the best. But again, the vocal part completely confused the classifier, so it was obvious I had to do source separation. After searching the web and trying out 3 different source separators, I found <a href="https://github.com/deezer/spleeter">Spleeter</a>. That tool is fantastic for separating vocals from accompaniment and far exceeds in quality all others I tried. So I added source separation and the result became almost tolerable for me.
 
-### fourth-approach
+### The Fourth Approach
 A friend of mine suggested trying out FCN for chord prediction, so this was my fourth approach. However, while training my FCN network, I never got accuracy above 16%, and basically stopped my fourth approach there. I am certainly not experienced in deep learning, and don't know if the network that I designed corresponds well with the underlying data and the task at hand. Also, as I mentioned before, the training data is terribly skewed.
 
 
