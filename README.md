@@ -22,11 +22,11 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li>[The First Approach](first-approach)</li>
-        <li><a href="#The Second Approach">The Second Approach</a></li>
-        <li><a href="#The Third Approach">The Third Approach</a></li>
-        <li><a href="#The Fourth Approach">The Fourth Approach</a></li>
-        <li><a href="#The Next Steps">The Next Steps</a></li>
+        <li><a href="#first-approach">The First Approach</a></li>
+        <li><a href="#second-approach">The Second Approach</a></li>
+        <li><a href="#third-approach">The Third Approach</a></li>
+        <li><a href="#fourth-approach">The Fourth Approach</a></li>
+        <li><a href="#next-steps">The Next Steps</a></li>
       </ul>
     </li>
 
