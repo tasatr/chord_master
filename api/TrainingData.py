@@ -10,6 +10,13 @@ logger = logging.getLogger("TrainingData")
 class TrainingData:
     @staticmethod
     def getTrainingData(chords):
+        if chords is None:
+            training_data = AveragedChords.objects.all()
+            training_data_df = pd.DataFrame(list(training_data.values()))
+            training_inputs = training_data_df[["C", "Cs", "D", "Ds", "E", "F", "Fs", "G", "Gs", "A", "As", "B"]]
+            training_outputs = training_data_df.cleaned_chord
+            return training_inputs, training_outputs
+
         training_data = AveragedChords.objects.filter(Q(cleaned_chord__in=chords) | Q(cleaned_chord='<Silent>'))
         logger.error("###################################################in trainingData")
         logger.error(training_data.count())

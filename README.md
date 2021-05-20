@@ -4,7 +4,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="https://github.com/tasatr/chord_master/blob/master/images/chordmaster.jpg" alt="Logo" width="80" height="80">
+    <img src="https://github.com/tasatr/chord_master/blob/master/images/chordmaster.jpg" alt="Logo" width="200" height="80">
 
   <h3 align="center">Chord Master</h3>
 
@@ -25,9 +25,10 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#The First Approach">The First Approach</a></li>
-        <li><a href="#second-approach">The Second Approach</a></li>
-        <li><a href="#third-approach">The Third Approach</a></li>
-        <li><a href="fourth-approach">The Fourth Approach</a></li>
+        <li><a href="#The Second Approach">The Second Approach</a></li>
+        <li><a href="#The Third Approach">The Third Approach</a></li>
+        <li><a href="#The Fourth Approach">The Fourth Approach</a></li>
+        <li><a href="#The Next Steps">The Next Steps</a></li>
       </ul>
     </li>
 
@@ -76,6 +77,15 @@ I decided to take average values for each chord in my training data. That left t
 ### The Fourth Approach
 A friend of mine suggested trying out FCN for chord prediction, so this was my fourth approach (the code is here: [FCN.ipynb](https://github.com/tasatr/chord_master/blob/master/FCN.ipynb)
 ). However, while training my FCN network, I never got accuracy above 16%, and basically stopped my fourth approach there. I am certainly not experienced in deep learning, and don't know if the network that I designed corresponds well with the underlying data and the task at hand. Also, as I mentioned before, the training data is terribly skewed.
+
+### The Final Project
+The project is built on django framework, the backend is written in python and the frontend in React. I use multiple libraries including youtube-dl for downloading audio and video files, Spleeter for source separation and ffmpeg for adding the chords to the final video as subtitles.
+
+### The Next steps
+1. Remove the noisy beginnings
+2. Start with a small subset of chords that would still sound OK when replacing the more difficult chords (That's more of music theory)
+3. Use the HMM model for predicting chord sequences
+4. Use a full chromagram, not a 12-note chromagram for predicting more difficult chords
 
 
 <!-- CONTACT -->

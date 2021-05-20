@@ -36,7 +36,8 @@ export default class HomePage extends Component {
     handleVideoSelect = (video) => {
       console.log("this is selected video ",video);
 
-      var ret = video.snippet.title.replace(/\[.*\]/g,'');
+      var ret = video.snippet.title.replace(/\(.*\)/g,'');
+      var ret = ret.replace(/\[.*\]/g,'');
       console.log('VIDEO TITLE: ', ret)
 
       let splitall = ret.split("-")

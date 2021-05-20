@@ -15,6 +15,9 @@ db.sqlite3
 /static/
 /media/
 /lab_and_musics/
+/pretrained_models/
+
+temp*
 
 # Node modules
 */node_modules/

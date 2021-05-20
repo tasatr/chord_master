@@ -36,7 +36,7 @@ class CreateVideoView(APIView):
         serializer = self.serializer_class(data=request.data)
 
         #TODO: Remove this
-        #Video.objects.all().delete()
+        Video.objects.all().delete()
 
         result = cleanup('.')
 
@@ -92,6 +92,8 @@ class CreateVideoView(APIView):
             result = burn_subtitles_to_video(video, output_file_name)
 
             f = open(output_file_name, 'rb')
+            if ugChords is None:
+                ugChords = '<Empty>'
             video = Video(video_id = video_id, title = title, artist = artist, song = song, chords = ugChords, result_video = File(f) )
             video.save()
             return Response(VideoSerializer(video).data, status=status.HTTP_201_CREATED)

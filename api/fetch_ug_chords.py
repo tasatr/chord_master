@@ -51,6 +51,9 @@ class fetch_ug_chords() :
             updated_chords = []
             for idx, val in enumerate(chord_list):
                 chord = chord_list[idx]
+                #TODO: remove inversions
+                chord = chord.split('/')[0]
+
                 base_chord = self.getBaseChord(chord)
                 rest_chord = chord.split(base_chord,1)[1]
                 loc_in_chord_sequence = chord_sequence.index(base_chord)
