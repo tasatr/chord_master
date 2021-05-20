@@ -8,8 +8,6 @@
 
   <p align="center">
     Predict chords for any youtube music video and show them as subtitles
-    <br />
-    <a href="https://github.com/tasatr/chord_master">View Demo</a>
   </p>
 </p>
 
