@@ -36,7 +36,7 @@ class CreateVideoView(APIView):
         serializer = self.serializer_class(data=request.data)
 
         #TODO: Remove this
-        Video.objects.all().delete()
+        #Video.objects.all().delete()
 
         result = cleanup('.')
 
